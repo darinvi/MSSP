@@ -13,7 +13,7 @@ if __name__ == '__main__':
         y_train, 
         n_children=3, 
         n_levels=10, 
-        n_solutions=[100] * 2 + [25] * 2 + [10] * 2 + [5] * 2 + [2] * 2,  # as the complexity gets higher, consider less and less solutions
+        n_solutions=[100] * 2 + [50] * 2 + [20] * 2 + [10] * 2 + [5] * 2,  # as the complexity gets higher, consider less and less solutions
         allow_synergies=True, 
         n_jobs=-1, 
         early_stopping=True

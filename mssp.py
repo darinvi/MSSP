@@ -186,22 +186,22 @@ class MSSP:
     
     def _selection(self, population, fitnesses, level):
         # 20% of the solutions will be chosen (min 1) will be chosen from 
-        n_weak_solutions = max(1, int(0.2*(self.n_solutions[level] if isinstance(self.n_solutions, list) else self.n_solutions)))
-        n_strong_solutions = (self.n_solutions[level + 1] if isinstance(self.n_solutions, list) else self.n_solutions) - n_weak_solutions
+        n_weak_solutions = max(1, int(0.15*(self.n_solutions[level] if isinstance(self.n_solutions, list) else self.n_solutions)))
+        n_strong_solutions = (self.n_solutions[level] if isinstance(self.n_solutions, list) else self.n_solutions) - n_weak_solutions
 
         if n_weak_solutions + n_strong_solutions != self.n_solutions[level]:
             raise ValueError("n_weak_solutions + n_strong_solutions must be equal to n_solutions for level, something went wrong")
         
         i = np.argsort(fitnesses)
-        population = [population[j] for j in i[:n_strong_solutions]]
-        fitnesses = [fitnesses[j] for j in i[:n_strong_solutions]]
+        p_strong = [population[j] for j in i[:n_strong_solutions]]
+        f_strong = [fitnesses[j] for j in i[:n_strong_solutions]]
 
         # Preserve some weak solutions
         i_weak = np.random.choice(i[n_strong_solutions:], size=n_weak_solutions, replace=False)
-        population.extend([population[j] for j in i_weak])
-        fitnesses.extend([fitnesses[j] for j in i_weak])
+        p_weak = [population[j] for j in i_weak]
+        f_weak = [fitnesses[j] for j in i_weak]
 
-        return population, fitnesses
+        return p_strong + p_weak, f_strong + f_weak
 
     def fit(self):
         self._init_primitive_population()
